@@ -2,7 +2,6 @@ import React from 'react';
 import Task from './components/Task'
 import TaskInput from './components/TaskInput';
 
-//const API = 'http://localhost:3000/tasks';
 
 class App extends React.Component {
   constructor() {
@@ -17,35 +16,57 @@ class App extends React.Component {
     }
   }
 
-  addTask = task => {
-    this.setState(state => {
-      let { tasks } = state;
-      tasks.push({
-        id: tasks.length !== 0 ? tasks.length : 0,
-        title: task,
-        done: false
-      });
-      return tasks;
-    });
-  };
+  
+  addTask = (task) => {
+    this.setState((state) => {
+      let { tasks } = state
+      
+      return {
+        tasks: [
+          ...tasks,
+          {
+            id: tasks.length !== 0 ? tasks.length : 0,
+            title: task,
+            done: false,
+          },
+        ],
+      }
+    })
+  }
      
   doneTask = id => {
     const index = this.state.tasks.map(task => task.id).indexOf(id);
     this.setState(state => {
-      let { tasks } = state;
+      let { tasks } = state; 
       tasks[index].done = true;
       return tasks;
     });
   };
 
-  deleteTask = id => {
+  returnToUnDoneTask = id => {
     const index = this.state.tasks.map(task => task.id).indexOf(id);
-    this.setState(state => {
+      this.setState(state => {
       let { tasks } = state;
-      delete tasks[index];
+      tasks[index].done = false 
       return tasks;
-    });
-  };
+    })
+  }
+  
+  deleteTask = id => {
+    const newTasks = this.state.tasks.filter(task => task.id !== id);
+    this.setState({ tasks: newTasks });
+  }
+
+  //editTask = (title, id) => {
+    //const items = this.state.tasks;
+
+    //this.setState({
+      //tasks: items.filter(item => item.id !== id),
+      //tasks: {
+        //title
+      //}
+    //});
+  //}
 
   render() {
     const { tasks } = this.state;
@@ -60,7 +81,9 @@ class App extends React.Component {
         {[...activeTasks, ...doneTask].map(task => (
           <Task 
           doneTask={() => this.doneTask(task.id)}
-          deleteTask={() => this.deleteTask(task.id)} 
+          returnToUnDoneTask={() => this.returnToUnDoneTask(task.id)}
+          deleteTask={() => this.deleteTask(task.id)}
+          //editTask={() => this.editTask(task.id)}
           task={task} 
           key={task.id}
           ></Task>
@@ -73,5 +96,4 @@ class App extends React.Component {
 
 
 
-
-export default App;
+ export default App;

@@ -7,7 +7,7 @@ const Task = ({ task, ...props }) => {
             (
               <p onClick={props.doneTask}>✔️</p>  
             ) : (
-              <p onClick={props.deleteTask}>❌</p>  
+              <p onClick={props.returnToUnDoneTask}>X</p>  
             )}
         </div>
     );
@@ -20,6 +20,7 @@ const Task = ({ task, ...props }) => {
         <div className ={className}>
             <p>{task.title}</p>
             <ActionButton></ActionButton>
+            <p onClick={props.deleteTask} className='action-btn'>❌</p>
         </div>
     );
 };
