@@ -1,7 +1,6 @@
-import React from 'react';
-import Task from './components/Task'
-import TaskInput from './components/TaskInput';
-
+import React from "react";
+import Task from "./components/Task";
+import TaskInput from "./components/TaskInput";
 
 class App extends React.Component {
   constructor() {
@@ -9,18 +8,17 @@ class App extends React.Component {
 
     this.state = {
       tasks: [
-        { id: 0, title: 'Create todo-react-app', done: false }, 
-        { id: 1, title: 'Make a video about it', done: true },
-        { id: 2, title: 'Create simple todo-app', done: false }
-      ]    
-    }
+        { id: 0, title: "Create todo-react-app", done: false },
+        { id: 1, title: "Make a video about it", done: true },
+        { id: 2, title: "Create simple todo-app", done: false },
+      ],
+    };
   }
 
-  
   addTask = (task) => {
     this.setState((state) => {
-      let { tasks } = state
-      
+      let { tasks } = state;
+
       return {
         tasks: [
           ...tasks,
@@ -30,70 +28,54 @@ class App extends React.Component {
             done: false,
           },
         ],
-      }
-    })
-  }
-     
-  doneTask = id => {
-    const index = this.state.tasks.map(task => task.id).indexOf(id);
-    this.setState(state => {
-      let { tasks } = state; 
+      };
+    });
+  };
+
+  doneTask = (id) => {
+    const index = this.state.tasks.map((task) => task.id).indexOf(id);
+    this.setState((state) => {
+      let { tasks } = state;
       tasks[index].done = true;
       return tasks;
     });
   };
 
-  returnToUnDoneTask = id => {
-    const index = this.state.tasks.map(task => task.id).indexOf(id);
-      this.setState(state => {
+  returnToUnDoneTask = (id) => {
+    const index = this.state.tasks.map((task) => task.id).indexOf(id);
+    this.setState((state) => {
       let { tasks } = state;
-      tasks[index].done = false 
+      tasks[index].done = false;
       return tasks;
-    })
-  }
-  
-  deleteTask = id => {
-    const newTasks = this.state.tasks.filter(task => task.id !== id);
+    });
+  };
+
+  deleteTask = (id) => {
+    const newTasks = this.state.tasks.filter((task) => task.id !== id);
     this.setState({ tasks: newTasks });
-  }
-
-  //editTask = (title, id) => {
-    //const items = this.state.tasks;
-
-    //this.setState({
-      //tasks: items.filter(item => item.id !== id),
-      //tasks: {
-        //title
-      //}
-    //});
-  //}
+  };
 
   render() {
     const { tasks } = this.state;
-    const activeTasks = tasks.filter(task => !task.done);
-    const doneTask = tasks.filter(task => task.done);
+    const activeTasks = tasks.filter((task) => !task.done);
+    const doneTask = tasks.filter((task) => task.done);
 
-
-    return(
-      <div className='App'>
-        <h1 className='top'>Tasks: {activeTasks.length}</h1>
+    return (
+      <div className="App">
+        <h1 className="top">Tasks: {activeTasks.length}</h1>
         <TaskInput addTask={this.addTask}></TaskInput>
-        {[...activeTasks, ...doneTask].map(task => (
-          <Task 
-          doneTask={() => this.doneTask(task.id)}
-          returnToUnDoneTask={() => this.returnToUnDoneTask(task.id)}
-          deleteTask={() => this.deleteTask(task.id)}
-          //editTask={() => this.editTask(task.id)}
-          task={task} 
-          key={task.id}
+        {[...activeTasks, ...doneTask].map((task) => (
+          <Task
+            doneTask={() => this.doneTask(task.id)}
+            returnToUnDoneTask={() => this.returnToUnDoneTask(task.id)}
+            deleteTask={() => this.deleteTask(task.id)}
+            task={task}
+            key={task.id}
           ></Task>
-          ))}
+        ))}
       </div>
     );
-  } 
+  }
 }
 
-
-
-
- export default App;
+export default App;
